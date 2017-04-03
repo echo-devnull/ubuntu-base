@@ -1,0 +1,32 @@
+---
+language: python
+python: "2.7"
+
+before_install:
+ - sudo apt-get update -qq
+
+install:
+ - pip install -r requirements.txt
+
+cache:
+  directories:
+  - $HOME/.cache/pip
+
+sudo: required
+services:
+  - docker
+
+script:
+  - ansible-container build --from-scratch --flatten
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker login -u=${DOCKERHUB_NAME} -p=${DOCKERHUB_PASS};
+    export DATETAG=`date +%Y%m%d%H%M%S`;
+    docker tag ubuntu-base-ubuntu:latest mmaas/base-ubuntu:${TRAVIS_BUILD_NUMBER};
+    docker tag ubuntu-base-ubuntu:latest mmaas/base-ubuntu:${DATETAG};
+    docker tag ubuntu-base-ubuntu:latest mmaas/base-ubuntu:latest;
+    docker push mmaas/base-ubuntu:${TRAVIS_BUILD_NUMBER};
+    docker push mmaas/base-ubuntu:${DATETAG};
+    docker push mmaas/base-ubuntu:latest;
+    fi; docker images

@@ -1,0 +1,50 @@
+# This should be your Ansible playbooks to provision your containers.
+# An inventory will be automatically created using the names of the services
+# from your container.yml file.
+# Add any roles or other modules you'll need to this directory too.
+# For many examples of roles, check out Ansible Galaxy: https://galaxy.ansible.com/
+#
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install python
+      raw: $(which python) || apt-get update && apt-get install python -qq
+
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: Install dumb-init
+      apt:
+        name: "{{ item }}"
+        state: present
+        update_cache: yes
+      with_items:
+        - dumb-init
+        - aptitude
+
+    - name: Upgrading
+      apt:
+        upgrade: full
+        update_cache: yes
+
+    - name: remove packages
+      apt:
+        name: "{{ item }}"
+        state: absent
+        update_cache: yes
+      with_items:
+        - aptitude
+
+    - name: Clean up
+      shell: apt-get clean && apt-get autoremove -y && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
+
+- hosts: all
+  gather_facts: false
+  tasks:
+    - name: Remove software that is not needed
+      apt:
+        name: "{{ item }}"
+        state: absent
+      with_items:
+        - python
