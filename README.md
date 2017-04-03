@@ -1,4 +1,4 @@
-[![Build Status]([![Build Status](https://travis-ci.org/markmaas/ubuntu-base.svg?branch=master)](https://travis-ci.org/markmaas/ubuntu-base))
+[![Build Status](https://travis-ci.org/markmaas/ubuntu-base.svg?branch=master)](https://travis-ci.org/markmaas/ubuntu-base)
 
 # ubuntu-base
 
