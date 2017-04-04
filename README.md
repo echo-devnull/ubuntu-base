@@ -2,7 +2,7 @@
 
 # ubuntu-base
 
-Very simply put: Copy of an ubuntu image. There's almost nothing extra in this image except for the [S6 init system](https://blog.tutum.co/2014/12/02/docker-and-s6-my-new-favorite-process-supervisor/).
+Very simply put: Copy of an ubuntu image. There's almost nothing extra in this image except for the addition "dumb-init".
 
 I use this git repo as both template code for other more involved images and for creating my ubuntu base image
 
