@@ -11,7 +11,7 @@
     - name: Install python
       raw: $(which python) || apt-get update && apt-get install python -qq
 
-- hosts: all
+- hosts: ubuntu
   gather_facts: false
   tasks:
     - name: Install dumb-init
@@ -28,17 +28,6 @@
         upgrade: full
         update_cache: yes
 
-    - name: remove packages
-      apt:
-        name: "{{ item }}"
-        state: absent
-        update_cache: yes
-      with_items:
-        - aptitude
-
-    - name: Clean up
-      shell: apt-get clean && apt-get autoremove -y && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
-
 - hosts: all
   gather_facts: false
   tasks:
@@ -48,3 +37,7 @@
         state: absent
       with_items:
         - python
+        - aptitude
+
+    - name: Clean up
+      shell: apt-get clean && apt-get autoremove -y && rm -rf /var/cache/apt/* && rm -rf /var/lib/apt/lists/*
