@@ -3,4 +3,4 @@ services:
 
   ubuntu:
     image: ubuntu:16.10
-    command: ['/bin/s6-svscan', '/etc/s6']
+    command: ['/tini', '--', 'date']

@@ -5,32 +5,40 @@
 # For many examples of roles, check out Ansible Galaxy: https://galaxy.ansible.com/
 #
 ---
-- hosts: all
+- hosts: ubuntu
   gather_facts: false
-  tasks:
+  pre_tasks:
     - name: Install python
       raw: $(which python) || apt-get update && apt-get install python -qq
 
-- hosts: ubuntu
-  gather_facts: false
   tasks:
-    - name: Install dumb-init
+    - name: Install packages
       apt:
         name: "{{ item }}"
         state: present
         update_cache: yes
       with_items:
-        - dumb-init
         - aptitude
+
+    - name: Download tini init system.
+      get_url:
+        url: https://github.com/krallin/tini/releases/download/v0.14.0/tini
+        dest: /tini
+        validate_certs: no
+
+    - name: Settings execute and other rights
+      file:
+        path: /tini
+        mode: 0755
+        owner: root
+        group: root
 
     - name: Upgrading
       apt:
         upgrade: full
         update_cache: yes
 
-- hosts: all
-  gather_facts: false
-  tasks:
+  post_tasks:
     - name: Remove software that is not needed
       apt:
         name: "{{ item }}"
