@@ -22,7 +22,7 @@
 
     - name: Download tini init system.
       get_url:
-        url: https://github.com/krallin/tini/releases/download/v0.14.0/tini
+        url: https://github.com/krallin/tini/releases/download/v0.16.1/tini
         dest: /tini
         validate_certs: no
 

@@ -2,7 +2,7 @@
 
 # ubuntu-base
 
-Very simply put: Copy of an ubuntu image. There's almost nothing extra in this image except for the addition "dumb-init".
+Very simply put: Copy of an ubuntu image. There's almost nothing extra in this image except for the addition of the  "tini" init system.
 
 I use this git repo as both template code for other more involved images and for creating my ubuntu base image
 
