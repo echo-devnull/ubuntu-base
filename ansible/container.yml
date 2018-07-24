@@ -2,5 +2,5 @@ version: "2"
 services:
 
   ubuntu:
-    image: ubuntu:16.10
+    image: ubuntu:18.04
     command: ['/tini', '--', 'date']
